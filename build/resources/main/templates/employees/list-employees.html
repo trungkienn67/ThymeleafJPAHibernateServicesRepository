@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <title>Employee Directory</title>
+</head>
+<body>
+<div class="container">
+    <h2>Employee List</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.firstName}"></td>
+            <td th:text="${employee.lastName}"></td>
+            <td th:text="${employee.email}"></td>
+            <td>
+                <a th:href="@{/employees/showFormForUpdate(employeeId=${employee.id})}" class="btn btn-primary">Update</a>
+                <form th:action="@{/employees/delete}" method="post" style="display:inline;">
+                    <input type="hidden" name="employeeId" th:value="${employee.id}"/>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/employees/showFormForAdd}" class="btn btn-success">Add New Employee</a>
+</div>
+</body>
+</html>
